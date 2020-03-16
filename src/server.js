@@ -1,19 +1,19 @@
 import http from 'http';
-import socket from 'socket.io';
+// import socket from 'socket.io';
 import chalk from 'chalk';
 
 import apolloServer from '~/core/graphql';
 import mongoose from '~/core/mongoose';
-import sequelize from '~/core/sequelize';
+// import sequelize from '~/core/sequelize';
 
 import { PORT, HOST } from './env';
 import app from './app';
 
 const server = http.Server(app);
-const io = socket(server);
+// const io = socket(server);
 
-app.set('socket', io);
-io.origins(['*:*']);
+// app.set('socket', io);
+// io.origins(['*:*']);
 apolloServer.installSubscriptionHandlers(server);
 
 server.listen(Number(PORT), HOST, () => {
@@ -24,15 +24,15 @@ server.listen(Number(PORT), HOST, () => {
     .once('open', () => console.log(chalk.hex('#009688')('🚀 Mongo: Connection Succeeded.')))
     .on('error', err => console.error(err));
 
-  sequelize
-    .authenticate()
-    .then(() => console.log(chalk.hex('#009688')('🚀 Postgres: Connection Succeeded.')))
-    .catch(err => console.error(err));
+//   sequelize
+//     .authenticate()
+//     .then(() => console.log(chalk.hex('#009688')('🚀 Postgres: Connection Succeeded.')))
+//     .catch(err => console.error(err));
 });
 
-io.on('connection', connSocket => {
-  console.log(chalk.hex('#009688')('🚀 Socket: Connection Succeeded.'));
-  connSocket.on('disconnect', () => console.log(chalk.hex('#009688')('🚀 Socket: Disconnected.')));
-});
+// io.on('connection', connSocket => {
+//   console.log(chalk.hex('#009688')('🚀 Socket: Connection Succeeded.'));
+//   connSocket.on('disconnect', () => console.log(chalk.hex('#009688')('🚀 Socket: Disconnected.')));
+// });
 
 export default server;

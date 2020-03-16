@@ -6,7 +6,7 @@ import rateLimit from 'express-rate-limit';
 import compression from 'compression';
 import morgan from 'morgan';
 import session from 'express-session';
-import connectRedis from 'connect-redis';
+// import connectRedis from 'connect-redis';
 import rendertron from 'rendertron-middleware';
 import history from 'express-history-api-fallback';
 import * as Sentry from '@sentry/node';
@@ -14,7 +14,7 @@ import * as Sentry from '@sentry/node';
 import routes from '~/core/rest';
 import apolloServer from '~/core/graphql';
 import passport from '~/core/passport';
-import redis from '~/core/redis';
+// import redis from '~/core/redis';
 
 import { NODE_ENV, SECRET, RATE_LIMIT, SENTRY_DSN, STATIC_FILES, RENDERTRON_URL } from './env';
 
@@ -32,13 +32,13 @@ app.use(compression());
 app.use(morgan('tiny'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-app.use(session({
-  store: new (connectRedis(session))({ client: redis }),
-  name: 'sid',
-  resave: true,
-  saveUninitialized: true,
-  secret: SECRET,
-}));
+// app.use(session({
+//   store: new (connectRedis(session))({ client: redis }),
+//   name: 'sid',
+//   resave: true,
+//   saveUninitialized: true,
+//   secret: SECRET,
+// }));
 app.use(passport.initialize());
 app.use(passport.session());
 
