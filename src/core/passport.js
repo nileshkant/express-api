@@ -3,7 +3,6 @@ import { Strategy as JWTStrategy, ExtractJwt } from 'passport-jwt';
 
 import { SECRET, AUTH } from '~/env';
 import { MultiAccountUser } from '../authentication/document';
-var GoogleStrategy = require('passport-google-oauth20').Strategy;
 
 passport.use(new JWTStrategy(
   {
@@ -20,18 +19,6 @@ passport.use(new JWTStrategy(
       return done(error);
     }
   },
-));
-
-passport.use(new GoogleStrategy({
-    clientID: AUTH.GOOGLE.clientID,
-    clientSecret: AUTH.GOOGLE.clientSecret,
-    callbackURL: "https://localhost:3000/auth/google/callback"
-  },
-  function(accessToken, refreshToken, profile, cb) {
-    MultiAccountUser.findOrCreate({ googleId: profile.id }, function (err, user) {
-      return cb(err, user);
-    });
-  }
 ));
 
 export default passport;

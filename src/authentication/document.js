@@ -89,6 +89,10 @@ const userMultiAccountSchema = new Schema({
     required: true,
     unique: true,
   },
+  accountCreatedDate: {
+    type: Date,
+    default: Date.now
+  },
   accounts: [accountType],
   role: {
     type: String,
