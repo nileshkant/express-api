@@ -6,6 +6,7 @@
     "node": "12"
   },
   "scripts": {
+    "debug": "nodemon --nolazy --inspect-brk=8000 src/server.js --exec babel-node",
     "serve": "nodemon src/server.js --exec babel-node",
     "build": "babel src -d dist --ignore **/__tests__/**,**/__mocks__/**",
     "lint": "eslint 'src/**/*.js'",
