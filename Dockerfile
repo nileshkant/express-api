@@ -1,6 +1,6 @@
 FROM node:12
 
-ENV HOME /Express-Starter
+ENV HOME /express-api
 
 WORKDIR ${HOME}
 ADD . $HOME
