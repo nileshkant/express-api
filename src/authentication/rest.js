@@ -2,10 +2,11 @@ import { Router } from 'express';
 import passport from 'passport';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
+import find from 'lodash/find';
 
 import { SECRET } from '~/env';
 
-import { User } from './document';
+import { User, MultiAccountUser } from './document';
 
 const router = Router();
 
@@ -16,11 +17,11 @@ const router = Router();
  * @example POST /authentication/register { username: ${username}, password: ${password} }
  */
 router.post('/register', async (req, res) => {
-  const { username, password, email } = req.body;
+  const { username, email, password } = req.body;
 
   try {
     const passwordHash = await bcrypt.hash(password, 10);
-    const user = new User({ username, password: passwordHash, email });
+    const user = new MultiAccountUser({ username, email, accounts: [{password: passwordHash}] });
     await user.save();
     res.status(200).json({ username, message: 'Sign up suceesfully' });
   } catch (error) {
@@ -38,9 +39,9 @@ router.post('/login', async (req, res) => {
   const { username, password } = req.body;
 
   try {
-    const user = await User.findOne({ username }).exec();
-    const passwordsMatch = await bcrypt.compare(password, user.password);
-
+    const user = await MultiAccountUser.findOne({ username }).lean();
+    if (password) {
+      const passwordsMatch = await bcrypt.compare(password, find(user.accounts, 'password').password);
     if (passwordsMatch) {
       const payload = {
         username: user.username,
@@ -57,6 +58,9 @@ router.post('/login', async (req, res) => {
     } else {
       res.status(400).json({ message: 'Incorrect Username / Password' });
     }
+  } else {
+    res.status(400).json({ message: 'Incorrect Username / Password' });
+  }
   } catch (error) {
     res.status(400).json({ message: error });
   }
@@ -69,8 +73,12 @@ router.post('/login', async (req, res) => {
  */
 router.get('/profile', passport.authenticate('jwt', { session: false }), async (req, res) => {
   const { user } = req;
-
-  res.status(200).json({ user });
+  res.status(200).json({ 
+    id: user.id, 
+    username: user.username, 
+    role: user.role, 
+    email: user.email 
+  });
 });
 
 /**
