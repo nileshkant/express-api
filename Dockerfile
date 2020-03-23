@@ -1,6 +1,6 @@
 FROM node:12
 
-ENV HOME /express-api
+ENV HOME /home/ubuntu/development/express-api
 
 WORKDIR ${HOME}
 ADD . $HOME
