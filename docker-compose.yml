@@ -13,7 +13,7 @@ services:
       - yarn:/home/node/.cache/yarn
     tty: true
     links:
-      -mongo
+      - mongo
   mongo:
     container_name: mongo
     image: mongo
