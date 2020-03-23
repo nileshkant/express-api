@@ -14,7 +14,7 @@ ENV HOST 0.0.0.0
 
 ENV SECRET jbmpHPLoaV8N0nEpuLxlpT95FYakMPiu
 
-ENV MONGODB_URI mongodb://mongo:27017/app
+ENV MONGODB_URI mongodb://0.0.0.0:27017/app
 # ENV POSTGRES_URL postgres://ymuxoegt:ONfBcCQylth3boOdUE2EkcZbC2OAbtcm@tantor.db.elephantsql.com:5432/ymuxoegt
 # ENV REDIS_URL redis://redis-17929.c1.us-central1-2.gce.cloud.redislabs.com:17929
 
