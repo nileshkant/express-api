@@ -4,6 +4,7 @@ services:
 
   app:
     image: app
+    command: yarn serve
     build:
       context: .
       dockerfile: Dockerfile
