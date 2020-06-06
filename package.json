@@ -24,7 +24,7 @@
   "dependencies": {
     "@elastic/elasticsearch": "7.5.0",
     "@sentry/node": "5.12.4",
-    "apollo-server-express": "2.9.14",
+    "apollo-server-express": "2.14.2",
     "base64-to-uint8array": "1.0.0",
     "bcrypt": "4.0.1",
     "bull": "3.13.0",
